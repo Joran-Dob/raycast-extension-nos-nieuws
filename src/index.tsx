@@ -1,17 +1,16 @@
 import { ActionPanel, CopyToClipboardAction, Detail, List, OpenInBrowserAction, useNavigation } from "@raycast/api";
 import Parser from "rss-parser";
 import { useEffect, useState } from "react";
-import * as timeago from 'timeago.js';
-import nl from 'timeago.js/lib/lang/nl';
+import * as timeago from "timeago.js";
+import nl from "timeago.js/lib/lang/nl";
 const parser = new Parser();
-timeago.register('nl_NL', nl);
+timeago.register("nl_NL", nl);
 
 interface State {
   items?: Parser.Item[];
   error?: Error;
 }
 export default function Command() {
-
   const [state, setState] = useState<State>({});
 
   useEffect(() => {
@@ -27,17 +26,17 @@ export default function Command() {
     fetchStories();
   }, []);
 
-
-  return <List isLoading={!state.items && !state.error}>
-    {state.items?.map((item, index) => (
-      <StoryListItem key={item.guid} item={item} index={index} />
-    ))}
-  </List>;
+  return (
+    <List isLoading={!state.items && !state.error}>
+      {state.items?.map((item, index) => (
+        <StoryListItem key={item.guid} item={item} index={index} />
+      ))}
+    </List>
+  );
 }
 
-
 function StoryListItem(props: { item: Parser.Item; index: number }) {
-  const pubDate = timeago.format(props.item.pubDate?.toString() ?? "", 'nl_NL');
+  const pubDate = timeago.format(props.item.pubDate?.toString() ?? "", "nl_NL");
 
   return (
     <List.Item
@@ -56,9 +55,7 @@ function Actions(props: { item: Parser.Item }) {
       <ActionPanel.Section>
         <ActionPanel.Item title="View item" onAction={() => push(<StoryDetail item={props.item} />)} />
       </ActionPanel.Section>
-      <ActionPanel.Section>
-        {props.item.link && <OpenInBrowserAction url={props.item.link} />}
-      </ActionPanel.Section>
+      <ActionPanel.Section>{props.item.link && <OpenInBrowserAction url={props.item.link} />}</ActionPanel.Section>
       <ActionPanel.Section>
         {props.item.link && (
           <CopyToClipboardAction
@@ -73,7 +70,7 @@ function Actions(props: { item: Parser.Item }) {
 }
 
 function StoryDetail(props: { item: Parser.Item }) {
-  const pubDate = timeago.format(props.item.pubDate?.toString() ?? "", 'nl_NL');
+  const pubDate = timeago.format(props.item.pubDate?.toString() ?? "", "nl_NL");
 
   function cleanHtml(html: string | undefined) {
     return (html ?? "").replace(/<\/?[^>]+(>|$)/g, "");
@@ -86,7 +83,7 @@ function StoryDetail(props: { item: Parser.Item }) {
     }
     markDownContent += `# ${cleanHtml(props.item.title)}\n\n`;
     markDownContent += `### ${pubDate}\n\n`;
-    markDownContent += `${(props.item.contentSnippet)} \n`;
+    markDownContent += `${props.item.contentSnippet} \n`;
     return markDownContent;
   }
 
@@ -95,9 +92,7 @@ function StoryDetail(props: { item: Parser.Item }) {
       markdown={getMarkDownContent()}
       actions={
         <ActionPanel>
-          <ActionPanel.Section>
-            {props.item.link && <OpenInBrowserAction url={props.item.link} />}
-          </ActionPanel.Section>
+          <ActionPanel.Section>{props.item.link && <OpenInBrowserAction url={props.item.link} />}</ActionPanel.Section>
         </ActionPanel>
       }
     />

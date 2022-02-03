@@ -9,7 +9,7 @@
   "commands": [
     {
       "name": "index",
-      "title": "Show NOS nieuws",
+      "title": "Show NOS News",
       "subtitle": "View the latest news and articles",
       "description": "Displays the latest news and articles from nos.nl",
       "mode": "view"
