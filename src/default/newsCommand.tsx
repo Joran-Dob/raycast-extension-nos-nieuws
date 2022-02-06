@@ -10,6 +10,9 @@ import Parser from "rss-parser";
 import { useEffect, useState } from "react";
 import * as timeago from "timeago.js";
 import nl from "timeago.js/lib/lang/nl";
+import TurndownService from 'turndown';
+
+const turndownService = new TurndownService();
 const parser = new Parser();
 timeago.register("nl_NL", nl);
 
@@ -17,14 +20,21 @@ interface State {
   items?: Parser.Item[];
   error?: Error;
 }
-export default function Command() {
+
+interface NewsCommandProps {
+  feedUrl: string;
+}
+
+export default function NewsCommand(
+  props: NewsCommandProps
+) {
   const [state, setState] = useState<State>({});
 
   useEffect(() => {
     async function fetchStories() {
       try {
         const feed = await parser.parseURL(
-          "http://feeds.nos.nl/nosnieuwsalgemeen"
+          props.feedUrl
         );
         setState({ items: feed.items });
       } catch (error) {
@@ -100,7 +110,7 @@ function StoryDetail(props: { item: Parser.Item }) {
     }
     markDownContent += `# ${cleanHtml(props.item.title)}\n\n`;
     markDownContent += `### ${pubDate}\n\n`;
-    markDownContent += `${props.item.contentSnippet} \n`;
+    markDownContent += `${turndownService.turndown(props.item.content ?? "")} \n`;
     return markDownContent;
   }
 

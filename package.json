@@ -8,9 +8,30 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
-      "title": "Show NOS News",
-      "subtitle": "View the latest news and articles",
+      "name": "latestNews",
+      "title": "Latest News",
+      "subtitle": "NOS News",
+      "description": "Displays the latest news and articles from nos.nl",
+      "mode": "view"
+    },
+    {
+      "name": "domesticNews",
+      "title": "Domestic News",
+      "subtitle": "NOS News",
+      "description": "Displays the latest news and articles from nos.nl",
+      "mode": "view"
+    },
+    {
+      "name": "foreignNews",
+      "title": "Foreign News",
+      "subtitle": "NOS News",
+      "description": "Displays the latest news and articles from nos.nl",
+      "mode": "view"
+    },
+    {
+      "name": "sportNews",
+      "title": "Sport News",
+      "subtitle": "NOS News",
       "description": "Displays the latest news and articles from nos.nl",
       "mode": "view"
     }
@@ -18,13 +39,15 @@
   "dependencies": {
     "@raycast/api": "^1.27.1",
     "rss-parser": "^3.12.0",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "turndown": "^7.1.1"
   },
   "devDependencies": {
     "@types/node": "~16.10.0",
     "@types/react": "^17.0.28",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "@types/turndown": "^5.0.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.1",
